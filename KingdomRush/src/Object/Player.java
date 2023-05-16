@@ -35,9 +35,10 @@ public class Player extends Character{
         
         try{
             for(int x = 0; x < 6; x++){
-                walk.add(ImageIO.read(getClass().getResourceAsStream("/assets/player/player"+(x+1)+".png")));
+                walkright.add(ImageIO.read(getClass().getResourceAsStream("/assets/player/walk"+(x+1)+".png")));
+                walkleft.add(ImageIO.read(getClass().getResourceAsStream("/assets/player/walkleft"+(x+1)+".png")));
+                idle.add(ImageIO.read(getClass().getResourceAsStream("/assets/player/idle"+(x+1)+".png")));
             }
-            System.out.println(walk.size());
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -53,19 +54,33 @@ public class Player extends Character{
             moveLeft();
         }else if(keyhandler.right == true){
             moveRight();
+        }else{
+            direction = "idle";
+        }
+        
+        spriteCounter++;
+        if(spriteCounter > 10){
+            if(spriteIndex == 5){
+                spriteIndex = 0;
+            }else{
+                spriteIndex++;
+            }
+            spriteCounter = 0;
         }
     }
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         
-        if(direction == "up"){
-            image = walk.get(0);
-        }else if(direction == "down"){
-            image = walk.get(1);
-        }else if(direction == "left"){
-            image = walk.get(2);
-        }else if(direction == "right"){
-            image = walk.get(3);
+        if(direction.equals("up")){
+            image = walkleft.get(spriteIndex);
+        }else if(direction.equals("down")){
+            image = walkright.get(spriteIndex);
+        }else if(direction.equals("left")){
+            image = walkleft.get(spriteIndex);
+        }else if(direction.equals("right")){
+            image = walkright.get(spriteIndex);
+        }else if(direction.equals("idle")){
+            image = idle.get(spriteIndex);
         }
         
         g2.drawImage(image, posX, posY, gamepanel.tileSize, gamepanel.tileSize, null);

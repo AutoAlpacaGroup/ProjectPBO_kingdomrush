@@ -14,7 +14,9 @@ import java.util.ArrayList;
 public class Character {
     public int posX, posY;
     public int characterSpeed;
-    public ArrayList<BufferedImage> walk = new ArrayList<>();
+    public ArrayList<BufferedImage> walkright = new ArrayList<>();
+    public ArrayList<BufferedImage> walkleft = new ArrayList<>();
+    public ArrayList<BufferedImage> idle = new ArrayList<>();
     public String direction;
     
     public int spriteIndex = 0;
