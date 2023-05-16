@@ -24,18 +24,34 @@ public class Character {
     
     public void moveUp(){
         direction = "up";
-        posY -= characterSpeed;
+        if(posY-characterSpeed >= 0){
+            posY -= characterSpeed;
+        }else{
+            posY = 0;
+        }
     }
     public void moveDown(){
         direction = "down";
-        posY += characterSpeed;
+        if(posY+characterSpeed <= 720-80){ 
+            posY += characterSpeed;
+        }else{
+            posY = 720-80;
+        }
     }
     public void moveLeft(){
         direction = "left";
-        posX -= characterSpeed;
+        if(posX-characterSpeed >= 0){
+            posX -= characterSpeed;
+        }else{
+            posX = 0;
+        }
     }
     public void moveRight(){
         direction = "right";
-        posX += characterSpeed;
+        if(posX+characterSpeed <= 1280-80){ // check if < 1280 (maps dimension) - 80 (tilesize)
+            posX += characterSpeed;
+        }else{
+            posX = 1280-80;
+        }
     }
 }
