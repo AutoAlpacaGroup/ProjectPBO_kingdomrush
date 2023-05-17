@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package MainPackage;
+import Maps.MapsManager;
 import Object.Player;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
     // FPS
     int fps = 60;
     Player player;
+    MapsManager mapsmanager = new MapsManager(this);
     KeyHandler keyhandler = new KeyHandler();
     Thread gameThread;
     
@@ -82,7 +84,8 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         
-        // draw object player
+        // draw components
+        mapsmanager.draw(g2);
         player.draw(g2);
         g2.dispose();
     }
