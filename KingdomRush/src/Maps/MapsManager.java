@@ -14,22 +14,46 @@ import javax.imageio.ImageIO;
  * @author richardwei
  */
 public class MapsManager {
+    String[][] mapsmodel;
     GamePanel gamepanel;
-    Tile[][] tile;
+    Tile[] tileStyle; // save all tile style
     
     public MapsManager(GamePanel gamepanel){
         this.gamepanel = gamepanel;
-        tile = new Tile[9][16];
+        tileStyle = new Tile[14];
         getTileImage();
+        mapsmodel = MapsModel.model; // get MapsModel 
     }
     public void getTileImage(){
         try{
-            for(int y = 0; y < 9; y++){
-                for(int x = 0; x < 16; x++){
-                    tile[y][x] = new Tile();
-                    tile[y][x].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/grass.png"));
-                }
-            }
+            tileStyle[0] = new Tile();
+            tileStyle[1] = new Tile();
+            tileStyle[2] = new Tile();
+            tileStyle[3] = new Tile();
+            tileStyle[4] = new Tile();
+            tileStyle[5] = new Tile();
+            tileStyle[6] = new Tile();
+            tileStyle[7] = new Tile();
+            tileStyle[8] = new Tile();
+            tileStyle[9] = new Tile();
+            tileStyle[10] = new Tile();
+            tileStyle[11] = new Tile();
+            tileStyle[12] = new Tile();
+            tileStyle[13] = new Tile();
+            tileStyle[0].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/grass.png"));
+            tileStyle[1].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/sand.png"));
+            tileStyle[2].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/cornerTopLeft.png"));
+            tileStyle[3].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/top.png"));
+            tileStyle[4].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/cornerTopRight.png"));
+            tileStyle[5].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/right.png"));
+            tileStyle[6].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/cornerBottomRight.png"));
+            tileStyle[7].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/bottom.png"));
+            tileStyle[8].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/cornerBottomLeft.png"));
+            tileStyle[9].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/left.png"));
+            tileStyle[10].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/angle1.png"));
+            tileStyle[11].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/angle2.png"));
+            tileStyle[12].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/angle3.png"));
+            tileStyle[13].image = ImageIO.read(getClass().getResourceAsStream("/assets/mapstile/angle4.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -38,7 +62,8 @@ public class MapsManager {
         int tileSize = gamepanel.tileSize;
         for(int y = 0; y < 9; y++){
             for(int x = 0; x < 16; x++){
-                g2.drawImage(tile[y][x].image, x*tileSize, y*tileSize, tileSize, tileSize, gamepanel);
+                int indexTileStyle = Integer.parseInt(mapsmodel[y][x]);
+                g2.drawImage(tileStyle[indexTileStyle].image, x*tileSize, y*tileSize, tileSize, tileSize, gamepanel);
             }
         }
     }

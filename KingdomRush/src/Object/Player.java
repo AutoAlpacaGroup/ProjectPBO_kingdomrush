@@ -27,7 +27,7 @@ public class Player extends Character{
     private void setupDefaultPlayer(){
         posX = 100;
         posY = 100;
-        characterSpeed = 4;
+        characterSpeed = 2;
     }
     public void getPlayerImage() {
         // defautl direction
