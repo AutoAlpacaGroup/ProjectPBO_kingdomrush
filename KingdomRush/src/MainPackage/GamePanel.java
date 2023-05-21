@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package MainPackage;
+import PlayerBase.PlayerBase;
 import Maps.MapsManager;
 import Object.Player;
 import UI.HomeMenuUI;
@@ -42,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
     PauseUI pauseUI = new PauseUI(this);    
     TitleUI titleUI = new TitleUI(this);
     HomeMenuUI homemenuUI = new HomeMenuUI(this);
+    PlayerBase playerbase = new PlayerBase(this);
     
     Thread gameThread;
     
@@ -119,6 +121,7 @@ public class GamePanel extends JPanel implements Runnable{
             mapsmanager.draw(g2);
             player.draw(g2);
             homemenuUI.draw(g2);
+            playerbase.draw(g2);
             if(gameState == pauseState){
                 pauseUI.draw(g2);
             }
