@@ -15,19 +15,16 @@ import javax.imageio.ImageIO;
  * @author richa
  */
 public class Player extends Character{
-    GamePanel gamepanel;
-    KeyHandler keyhandler;
-    
+  
     public Player(GamePanel gamepanel, KeyHandler keyhandler){
-        this.gamepanel = gamepanel;
-        this.keyhandler = keyhandler;
+        super(100, gamepanel, keyhandler);
         setupDefaultPlayer();
         getPlayerImage();
     }
     private void setupDefaultPlayer(){
-        posX = 100;
-        posY = 100;
-        characterSpeed = 2;
+        posX = gamepanel.screenWidth / 2 - gamepanel.tileSize / 2;
+        posY = gamepanel.screenHeight / 2 - gamepanel.tileSize / 2;;
+        characterSpeed = 4; 
     }
     public void getPlayerImage() {
         // defautl direction
@@ -43,8 +40,33 @@ public class Player extends Character{
             e.printStackTrace();
         }
     }
+    // PLAYER MOVEMENT
+    public void moveUp(){
+        direction = "up";
+        if(posY-characterSpeed >= 0){
+            posY -= characterSpeed;
+        }
+    }
+    public void moveDown(){
+        direction = "down";
+        if(posY+characterSpeed <= gamepanel.arenaScreenRow * gamepanel.tileSize - gamepanel.tileSize){ 
+            posY += characterSpeed;
+        }
+    }
+    public void moveLeft(){
+        direction = "left";
+        if(posX-characterSpeed >= 0){
+            posX -= characterSpeed;
+        }
+    }
+    public void moveRight(){
+        direction = "right";
+        if(posX+characterSpeed <= gamepanel.arenaScreenCol * gamepanel.tileSize - (gamepanel.tileSize * 2)){ // check if < 1280 (maps dimension) - 80 (tilesize)
+            posX += characterSpeed;
+        }
+    }
     
-    // update draw
+    // UPDATE DRAW
     public void update(){
         if(keyhandler.up == true){
             moveUp();
@@ -68,11 +90,13 @@ public class Player extends Character{
             spriteCounter = 0;
         }
     }
+    
+    // DRAW
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         
         if(direction.equals("up")){
-            image = walkleft.get(spriteIndex);
+            image = walkright.get(spriteIndex);
         }else if(direction.equals("down")){
             image = walkright.get(spriteIndex);
         }else if(direction.equals("left")){

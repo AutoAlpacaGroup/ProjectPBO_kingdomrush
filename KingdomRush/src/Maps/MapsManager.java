@@ -60,11 +60,11 @@ public class MapsManager {
     }
     public void draw(Graphics2D g2){
         int tileSize = gamepanel.tileSize;
-        for(int y = 0; y < 9; y++){
-            for(int x = 0; x < 16; x++){
+        for(int y = 0; y < gamepanel.arenaScreenRow; y++){
+            for(int x = 0; x < gamepanel.arenaScreenCol; x++){
                 int indexTileStyle = Integer.parseInt(mapsmodel[y][x]);
                 g2.drawImage(tileStyle[indexTileStyle].image, x*tileSize, y*tileSize, tileSize, tileSize, gamepanel);
-            }
+            }                       
         }
     }
 }

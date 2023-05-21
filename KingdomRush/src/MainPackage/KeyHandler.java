@@ -12,8 +12,12 @@ import java.awt.event.KeyListener;
  * @author richa
  */
 public class KeyHandler implements KeyListener{
-
+    GamePanel gamepanel;
     public boolean up, down, left, right;
+    
+    public KeyHandler(GamePanel gamepanel){
+        this.gamepanel = gamepanel;
+    }
     
     @Override
     public void keyTyped(KeyEvent e) {
@@ -23,14 +27,40 @@ public class KeyHandler implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if(code == KeyEvent.VK_W){
-            up = true;
-        }else if(code == KeyEvent.VK_S){
-            down = true;
-        }else if(code == KeyEvent.VK_A){
-            left = true;
-        }else if(code == KeyEvent.VK_D){
-            right = true;
+        
+        if(gamepanel.gameState == gamepanel.titleState){
+            if(code == KeyEvent.VK_UP){
+                if(gamepanel.getTitleFrameCurrentMode() - 1 >= 0){
+                    gamepanel.setTitleFrameSelectedMode(gamepanel.getTitleFrameCurrentMode() - 1);
+                }
+            }else if(code == KeyEvent.VK_DOWN){
+                if(gamepanel.getTitleFrameCurrentMode() + 1 < 3){
+                    gamepanel.setTitleFrameSelectedMode(gamepanel.getTitleFrameCurrentMode() + 1);
+                }
+            }else if(code == KeyEvent.VK_ENTER){
+                int currentMode = gamepanel.getTitleFrameCurrentMode();
+                if(currentMode == 0){
+                    gamepanel.gameState = gamepanel.playState;
+                }else if(currentMode == 2){
+                    System.exit(0);
+                }
+            }
+        }else{
+            if(code == KeyEvent.VK_W){
+                up = true;
+            }else if(code == KeyEvent.VK_S){
+                down = true;
+            }else if(code == KeyEvent.VK_A){
+                left = true;
+            }else if(code == KeyEvent.VK_D){
+                right = true;
+            }else if(code == KeyEvent.VK_SPACE){
+                if(gamepanel.gameState == gamepanel.playState){
+                    gamepanel.gameState = gamepanel.pauseState;
+                }else if(gamepanel.gameState == gamepanel.pauseState){
+                    gamepanel.gameState = gamepanel.playState;
+                }
+            }
         }
     }
 
