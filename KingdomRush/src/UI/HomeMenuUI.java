@@ -15,14 +15,10 @@ import javax.imageio.ImageIO;
  *
  * @author richardwei
  */
-public class HomeMenuUI {
-    GamePanel gamepanel;
+public class HomeMenuUI extends UIBox{
     BufferedImage image;
-    protected int bannerHeight;
-    protected int bannerWidth;
-    protected int PositionX;
-    protected int PositionY;
     final int margin = 10;
+    
     public HomeMenuUI(GamePanel gamepanel){
         try {
             this.gamepanel = gamepanel;

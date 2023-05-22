@@ -16,13 +16,8 @@ import javax.imageio.ImageIO;
  *
  * @author richardwei
  */
-public class PauseUI {
-    GamePanel gamepanel;
+public class PauseUI extends UIBox{
     Graphics2D g2;
-    protected int bannerWidth;
-    protected int bannerHeight;
-    protected int PositionX;
-    protected int PositionY;
     protected BufferedImage image;
     protected Font customFont;
     protected Color fontColor;
@@ -46,18 +41,21 @@ public class PauseUI {
         this.g2 = g2;
         g2.setFont(customFont);
         fontColor = new Color(255,255,204);
+        
+        // SET BANNER WIDTH, HEIGHT & START POSITION
         bannerWidth = 7 * gamepanel.tileSize;
         bannerHeight = 2 * gamepanel.tileSize;
         
         PositionX = gamepanel.screenWidth / 2 - bannerWidth / 2;
         PositionY = gamepanel.screenHeight / 2 - bannerHeight / 2;
+        // =========================================
         
         g2.drawImage(image, PositionX, PositionY, bannerWidth, bannerHeight, gamepanel);
         
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 96F));
         String text = "PAUSE";
         
-        // SET POSITION
+        // SET TEXT POSITION
         int textPosX = getXforCenteredText(text);
         int textPosY = getYforCenteredText(text);
         

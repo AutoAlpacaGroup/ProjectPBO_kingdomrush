@@ -56,10 +56,12 @@ public class TitleUI {
         fontColor = new Color(255,255,204);
         
         g2.drawImage(backgroundImage, 0, 0, gamepanel.screenWidth, gamepanel.screenHeight, null);
+        // SET BANNER HEIGHT, WIDTH, X , Y
         int bannerWidth = gamepanel.tileSize * 10;
         int bannerHeight = gamepanel.tileSize * 6;
         int screenX = gamepanel.screenWidth / 2 - bannerWidth / 2;
         int screenY = gamepanel.screenHeight / 2 - bannerHeight / 2 - gamepanel.tileSize / 2;
+        // ===============================
         g2.drawImage(bannerBackground, screenX, screenY, bannerWidth, bannerHeight, null);
         drawTitle();
     }

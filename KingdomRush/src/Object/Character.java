@@ -15,23 +15,24 @@ import java.util.ArrayList;
  */
 public class Character {
     // POSITION, IMAGE, DIRECTION
-    public int posX, posY;
-    public int characterSpeed;
+    protected int posX, posY;
+    protected int characterSpeed;
     GamePanel gamepanel;
     KeyHandler keyhandler;
-    public ArrayList<BufferedImage> walkright = new ArrayList<>();
-    public ArrayList<BufferedImage> walkleft = new ArrayList<>();
-    public ArrayList<BufferedImage> idle = new ArrayList<>();
-    public String direction;
+    protected ArrayList<BufferedImage> walkright = new ArrayList<>();
+    protected ArrayList<BufferedImage> walkleft = new ArrayList<>();
+    protected ArrayList<BufferedImage> idle = new ArrayList<>();
+    protected String direction;
     
     // ANIMATION INDEX & COUNTER
-    public int spriteIndex = 0;
-    public int spriteCounter = 0;
+    protected int spriteIndex = 0;
+    protected int spriteCounter = 0;
     
     // CHARACTER STATUS
-    public int characterHp;
-    public boolean alive;
-    public int attackDamage;
+    protected int level;
+    protected int characterHp;
+    protected boolean alive;
+    protected int attackDamage;
     
     // CONSTRUCTOR
     public Character(int Hp, GamePanel gamepanel, KeyHandler keyhandler){

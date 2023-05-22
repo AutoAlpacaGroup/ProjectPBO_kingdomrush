@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int arenaScreenCol = 16;
     public final int arenaScreenRow = 9;
     public final int maxScreenCol = 16;
-    public final int maxScreenRow = 9;
+    public final int maxScreenRow = 10;
     
     public final int screenWidth = tileSize * maxScreenCol; // 1280 px
     public final int screenHeight = tileSize * maxScreenRow; // 720 px
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
     PauseUI pauseUI = new PauseUI(this);    
     TitleUI titleUI = new TitleUI(this);
     HomeMenuUI homemenuUI = new HomeMenuUI(this);
-    PlayerBase playerbase = new PlayerBase(this);
+    PlayerBase playerbase;
     
     Thread gameThread;
     
@@ -68,6 +68,7 @@ public class GamePanel extends JPanel implements Runnable{
     // setup default game
     public void setupDefault(){
         player = new Player(this, keyhandler);
+        playerbase = new PlayerBase(this, player);
         gameState = titleState;
     }
     
