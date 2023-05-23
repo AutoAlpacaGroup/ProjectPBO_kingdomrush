@@ -28,10 +28,19 @@ public class MouseHandler implements MouseListener{
         int mousePositionX = e.getX();
         int mousePositionY = e.getY();
         
-        if(gamepanel.isHomeMenuPressed(mousePositionX, mousePositionY)){
-            gamepanel.gameState = gamepanel.pauseState;
+        if(gamepanel.shopStateOn == false){
+            if(gamepanel.isHomeMenuPressed(mousePositionX, mousePositionY)){
+                gamepanel.gameState = gamepanel.pauseState;
+            }else if(gamepanel.isUpgradeButtonPressed(mousePositionX, mousePositionY)){
+                gamepanel.shopStateOn = true;
+            }
+        }else{
+            if(!gamepanel.shopBoxPressed(mousePositionX, mousePositionY)){
+                gamepanel.shopStateOn = false;
+            }else{
+                
+            }
         }
-        
     }
 
     @Override

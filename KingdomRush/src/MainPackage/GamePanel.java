@@ -6,7 +6,9 @@ package MainPackage;
 import PlayerBase.PlayerBase;
 import Maps.MapsManager;
 import Object.Player;
+import PlayerBase.Shop;
 import UI.HomeMenuUI;
+import UI.InformationBoxUI;
 import UI.PauseUI;
 import UI.TitleUI;
 import java.awt.Color;
@@ -43,6 +45,9 @@ public class GamePanel extends JPanel implements Runnable{
     PauseUI pauseUI = new PauseUI(this);    
     TitleUI titleUI = new TitleUI(this);
     HomeMenuUI homemenuUI = new HomeMenuUI(this);
+    InformationBoxUI informationBoxUI = new InformationBoxUI(this);
+    Shop shop = new Shop(this);
+    
     PlayerBase playerbase;
     
     Thread gameThread;
@@ -52,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     public int pauseState = 2;
     public int playState = 1;
     public int titleState = 0;
+    public boolean shopStateOn = false;
     
     public GamePanel(){
         setupDefault();
@@ -69,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupDefault(){
         player = new Player(this, keyhandler);
         playerbase = new PlayerBase(this, player);
+        
         gameState = titleState;
     }
     
@@ -123,6 +130,10 @@ public class GamePanel extends JPanel implements Runnable{
             player.draw(g2);
             homemenuUI.draw(g2);
             playerbase.draw(g2);
+            informationBoxUI.draw(g2, playerbase.getStage(), playerbase.getAllitems(), player);
+            if(shopStateOn == true){
+                shop.draw(g2);
+            }
             if(gameState == pauseState){
                 pauseUI.draw(g2);
             }
@@ -138,8 +149,14 @@ public class GamePanel extends JPanel implements Runnable{
         return titleUI.getNum();
     }
     
-    // GETTER SETTER - HOMEMENU
+    // GETTER SETTER - HOMEMENU & UPGRADEBUTTON
     public boolean isHomeMenuPressed(int x, int y){
         return homemenuUI.isPressed(x,y);
+    }
+    public boolean isUpgradeButtonPressed(int x, int y){
+        return informationBoxUI.isUpgradeButtonPressed(x, y);
+    }
+    public boolean shopBoxPressed(int x, int y){
+        return shop.boxPressed(x,y);
     }
 }

@@ -15,13 +15,14 @@ import java.util.ArrayList;
  */
 public class Character {
     // POSITION, IMAGE, DIRECTION
-    protected int posX, posY;
-    protected int characterSpeed;
     GamePanel gamepanel;
     KeyHandler keyhandler;
     protected ArrayList<BufferedImage> walkright = new ArrayList<>();
     protected ArrayList<BufferedImage> walkleft = new ArrayList<>();
     protected ArrayList<BufferedImage> idle = new ArrayList<>();
+    
+    protected int posX, posY;
+    protected int characterSpeed;
     protected String direction;
     
     // ANIMATION INDEX & COUNTER
@@ -30,15 +31,39 @@ public class Character {
     
     // CHARACTER STATUS
     protected int level;
+    protected int characterMaxHp;
     protected int characterHp;
+    protected int maxShield;
+    protected int shield;
     protected boolean alive;
     protected int attackDamage;
     
     // CONSTRUCTOR
-    public Character(int Hp, GamePanel gamepanel, KeyHandler keyhandler){
+    public Character(GamePanel gamepanel, KeyHandler keyhandler){
         this.gamepanel = gamepanel;
         this.keyhandler = keyhandler;
         alive = false;
-        this.characterHp = Hp;
+        this.level = 1;
+        this.characterMaxHp = 100;
+        this.characterHp = characterMaxHp;
+        
+        this.maxShield = 50;
+        this.shield = maxShield; 
+    }
+    
+    public int getMaxHp(){
+        return this.characterMaxHp;
+    }
+    public int getHp(){
+        return this.characterHp;
+    }
+    public int getMaxShield(){
+        return this.maxShield;
+    }
+    public int getShield(){
+        return this.shield;
+    }
+    public int getLevel(){
+        return level;
     }
 }

@@ -22,16 +22,20 @@ public class Item {
     protected int level;
     protected int cooldown;
     protected int damage;
+    protected boolean unlock;
+    protected int upgradeCost;
     
     // BUTTON POSITION
     protected int x, y;
     protected int height, width;
     
-    public Item(String logoPath, String animationPath, String name, int damage, int cooldown){
+    public Item(String logoPath, String animationPath, String name, int damage, int cooldown, boolean unlock, int upgradeCost){
         this.itemName = name;
         this.damage = damage;
         this.level = 1;
         this.cooldown = cooldown;
+        this.unlock = unlock;
+        this.upgradeCost = upgradeCost;
         animation = new BufferedImage[10];
         
         try {

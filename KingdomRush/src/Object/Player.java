@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
@@ -17,7 +18,7 @@ import javax.imageio.ImageIO;
 public class Player extends Character{
   
     public Player(GamePanel gamepanel, KeyHandler keyhandler){
-        super(100, gamepanel, keyhandler);
+        super(gamepanel, keyhandler);
         setupDefaultPlayer();
         getPlayerImage();
     }
@@ -108,5 +109,9 @@ public class Player extends Character{
         }
         
         g2.drawImage(image, posX, posY, gamepanel.tileSize, gamepanel.tileSize, null);
+    }
+    
+    public ArrayList<BufferedImage> getIdleAnimation(){
+        return idle;
     }
 }

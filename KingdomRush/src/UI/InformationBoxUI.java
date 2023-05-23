@@ -5,15 +5,18 @@
 package UI;
 
 import MainPackage.GamePanel;
+import Object.Player;
 import PlayerBase.Item;
 import java.awt.*;
 import static java.awt.SystemColor.text;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.spec.NamedParameterSpec;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 /**
  *
  * @author richa
@@ -24,6 +27,11 @@ public class InformationBoxUI extends UIBox{
     protected Color borderColor;
     protected Font customFont;
     protected Color fontColor;
+    protected ArrayList<BufferedImage> animationCharacter = new ArrayList<>();
+    protected int animationIndex = 1;
+    protected int animationCounter = 1;
+    // SHOP BUTTON 
+    protected int shopButtonX, shopButtonY, shopButtonHeight, shopButtonWidth; 
     
     protected int margin;
     
@@ -54,7 +62,7 @@ public class InformationBoxUI extends UIBox{
         }
     }
     
-    public void draw(Graphics2D g2, String stage, ArrayList<Item> items){
+    public void draw(Graphics2D g2, String stage, ArrayList<Item> items, Player player){
         g2.setColor(backgroundColor);
         g2.fillRect(PositionX, PositionY, bannerWidth, bannerHeight);
         
@@ -99,6 +107,113 @@ public class InformationBoxUI extends UIBox{
             
             x += (int)g2.getFontMetrics().getStringBounds(itemText, g2).getWidth() + 10;
         }
+        
+        drawShopButton(g2);
+        drawPlayerInformation(g2, player);
     }
     
+    public void drawShopButton(Graphics2D g2){
+        int button_margin = 4;
+        String buttonText = "Upgrade Here";
+//        BufferedImage buttonImage = ImageIO.read(getClass().getResourceAsStream("/assets/"));
+        int textX, textY;
+        
+        shopButtonWidth = gamepanel.tileSize * 2;
+        shopButtonX = bannerWidth - borderSize - shopButtonWidth - button_margin * 2;
+        
+        shopButtonHeight = bannerHeight - borderSize * 2 - button_margin * 4;
+        shopButtonY = PositionY + bannerHeight / 2 - shopButtonHeight / 2;
+        
+        g2.setColor(new Color(222,139,43));
+        g2.fillRect(shopButtonX, shopButtonY, shopButtonWidth, shopButtonHeight);
+        
+        g2.setStroke(new BasicStroke(4));
+        g2.setColor(new Color(154,62,51));
+        g2.drawRect(shopButtonX, shopButtonY, shopButtonWidth, shopButtonHeight);
+        
+        g2.setFont(customFont);
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
+        
+        textX = (int)g2.getFontMetrics().getStringBounds(buttonText, g2).getWidth();
+        textX = shopButtonX + shopButtonWidth / 2 - textX / 2;
+        
+        textY = g2.getFontMetrics().getHeight();
+        textY = shopButtonY + shopButtonHeight / 2 - textY / 2 + g2.getFontMetrics().getAscent();
+        g2.drawString(buttonText, textX, textY);
+    }
+    
+    public void drawPlayerInformation(Graphics2D g2, Player player){
+        animationCharacter = player.getIdleAnimation();
+        int x, y, height, width;
+        int boxmargin = 2;
+        height = bannerHeight - boxmargin * 2 - borderSize * 2;
+        width = height;
+        x = borderSize + boxmargin;
+        y = gamepanel.arenaScreenRow * gamepanel.tileSize + borderSize + boxmargin;
+        
+        g2.setColor(new Color(222,139,43));
+        g2.fillRect(x, y, width, height);
+
+        int index = getAnimationIndex(); 
+        
+        y -= boxmargin * 4;
+        x += boxmargin * 4;
+        g2.drawImage(animationCharacter.get(index), x, y, width, height, null);
+        
+        // HEALTH BAR AND SHIELD
+        x += width;
+        y += boxmargin * 4;
+        
+        height = 16;
+        width = 100;
+        
+        g2.setColor(Color.white);
+        g2.fillRect(x, y, width, height);
+        
+        int healthBarWidth = player.getHp() * width / player.getMaxHp() ; 
+        g2.setColor(new Color(156, 2, 12));
+        g2.fillRect(x, y, healthBarWidth, height);
+        
+        g2.setColor(Color.black);
+        g2.setStroke(new BasicStroke(1));
+        g2.drawRect(x, y, width, height);
+        
+        y += height + 2;
+        height = 5;
+        int shieldbar = player.getShield()* width / player.getMaxShield();
+        g2.setColor(new Color(204, 236, 255));
+        g2.fillRect(x, y, shieldbar, height);
+        
+        // DRAW
+        y += height + 8 + g2.getFontMetrics().getAscent();
+        String text = "LV " + String.valueOf(player.getLevel());
+        g2.setColor(fontColor);
+        g2.setFont(customFont);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
+        g2.drawString(text, x, y);
+    }
+    
+    public boolean isUpgradeButtonPressed(int x, int y){
+        if(x > shopButtonX && x < shopButtonX + shopButtonWidth){
+            if(y > shopButtonY && y < shopButtonY + shopButtonHeight){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int getAnimationIndex(){
+        if(animationCounter > 10){
+            if(animationIndex >= animationCharacter.size() - 1){
+                animationIndex = 0;
+            }else{
+                animationIndex++;
+            }
+            animationCounter = 1;
+        }else{
+            animationCounter++;
+        }
+        
+        return animationIndex;
+    }
 }

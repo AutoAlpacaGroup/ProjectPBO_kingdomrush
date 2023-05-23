@@ -63,16 +63,16 @@ public class TitleUI {
         int screenY = gamepanel.screenHeight / 2 - bannerHeight / 2 - gamepanel.tileSize / 2;
         // ===============================
         g2.drawImage(bannerBackground, screenX, screenY, bannerWidth, bannerHeight, null);
-        drawTitle();
+        drawTitle(bannerHeight, bannerWidth, screenX, screenY);
     }
-    public void drawTitle(){
+    public void drawTitle(int bannerHeigth, int bannerWidth, int screenX, int screenY){
         
         g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 96F));
         String text = "KELUN RUSH";
         
         // SET POSITION
         int positionX = getXforCenteredText(text);
-        int positionY = gamepanel.tileSize * 3;
+        int positionY = screenY + gamepanel.tileSize + g2.getFontMetrics().getAscent();
         
         // SET COLOR
         g2.setColor(fontColor);

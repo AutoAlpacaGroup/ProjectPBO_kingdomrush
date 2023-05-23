@@ -21,7 +21,6 @@ public class PlayerBase {
     protected int stage;
     protected int live;
     protected int coin;
-    protected InformationBoxUI informationBoxUI;
     
     //ITEMS
     ArrayList<Item> items = new ArrayList<>();
@@ -41,23 +40,31 @@ public class PlayerBase {
         int y = 0;
         int width = gamepanel.tileSize;
         int height = gamepanel.tileSize;
-        informationBoxUI = new InformationBoxUI(gamepanel);
         coinBanner = new Banner("/assets/playerbase/coin.png", width, height, x, y, String.valueOf(coin));
         liveBanner = new Banner("/assets/playerbase/live.png", width, height, x, y + gamepanel.tileSize, String.valueOf(live));
         
         // ADD ITEMS
         int size = gamepanel.tileSize - 20;
-        addItem("/assets/effect/logo/bomb.png", "/assets/effect/animation/Circle_explosion", "bomb",  10, 120);
-        addItem("/assets/effect/logo/bluebomb.png", "/assets/effect/animation/Explosion_blue_circle", "blue bomb", 10, 40);
-        addItem("/assets/effect/logo/poisonbomb.png", "/assets/effect/animation/Explosion_gas_circle", "poison bomb", 10, 60);
+        addItem("/assets/effect/logo/bomb.png", "/assets/effect/animation/Circle_explosion", "bomb",  10, 6, true, 10);
+        addItem("/assets/effect/logo/bluebomb.png", "/assets/effect/animation/Explosion_blue_circle", "blue bomb", 20, 6, false, 15);
+        addItem("/assets/effect/logo/poisonbomb.png", "/assets/effect/animation/Explosion_gas_circle", "poison bomb", 25, 8, false, 20);
     }
     
     public void draw(Graphics2D g2){
         coinBanner.draw(g2);
         liveBanner.draw(g2);
-        informationBoxUI.draw(g2, ("Stage " + String.valueOf(stage)), items);
     }
-    public void addItem(String logoPath, String animationPath, String name, int damage, int cooldown){
-        items.add(new Item(logoPath, animationPath, name, damage, cooldown));
+    public void addItem(String logoPath, String animationPath, String name, int damage, int cooldown, boolean unlock, int upgradeCost){
+        items.add(new Item(logoPath, animationPath, name, damage, cooldown, unlock, upgradeCost));
+    }
+    public void addItem(Item newitem){
+        items.add(newitem);
+    }
+    
+    public String getStage(){
+        return ("Stage " + String.valueOf(stage));
+    }
+    public ArrayList<Item> getAllitems(){
+        return items;
     }
 }
