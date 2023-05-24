@@ -30,13 +30,19 @@ public class Character {
     protected int spriteCounter = 0;
     
     // CHARACTER STATUS
+    protected boolean alive;
     protected int level;
+    // HP
     protected int characterMaxHp;
     protected int characterHp;
+    // SHIELD
     protected int maxShield;
     protected int shield;
-    protected boolean alive;
+    // ATTACK
+    protected int defaultDamage;
     protected int attackDamage;
+    
+    
     
     // CONSTRUCTOR
     public Character(GamePanel gamepanel, KeyHandler keyhandler){
@@ -49,6 +55,9 @@ public class Character {
         
         this.maxShield = 50;
         this.shield = maxShield; 
+        
+        this.defaultDamage = 10;
+        this.attackDamage = defaultDamage;
     }
     
     public int getMaxHp(){

@@ -5,10 +5,12 @@
         <group>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/UI/PauseUI.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/UI/TitleUI.java</file>
+            <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/ButtonManager/ButtonManager.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/Maps/Tile.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/Maps/MapsManager.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/PlayerBase/Banner.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/MainPackage/KeyHandler.java</file>
+            <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/Object/PlayerBuild.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/UI/InformationBoxUI.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/PlayerBase/PlayerBase.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/Maps/MapsModel.java</file>
@@ -18,9 +20,11 @@
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/Object/Player.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/UI/UIBox.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/PlayerBase/Shop.java</file>
+            <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/ButtonManager/BuildButtonManager.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/MainPackage/GamePanel.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/Object/Character.java</file>
             <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/MainPackage/MouseHandler.java</file>
+            <file>file:/D:/Doc_STTS/semester2/1_PBO/ProjectGitHub/KingdomRush/src/ButtonManager/ItemsButtonManager.java</file>
         </group>
     </open-files>
 </project-private>

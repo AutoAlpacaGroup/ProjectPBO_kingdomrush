@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 /**
@@ -16,6 +17,7 @@ import javax.imageio.ImageIO;
  * @author richa
  */
 public class Player extends Character{
+    protected ArrayList<PlayerBuild> builds = new ArrayList<>();
   
     public Player(GamePanel gamepanel, KeyHandler keyhandler){
         super(gamepanel, keyhandler);
@@ -26,6 +28,10 @@ public class Player extends Character{
         posX = gamepanel.screenWidth / 2 - gamepanel.tileSize / 2;
         posY = gamepanel.screenHeight / 2 - gamepanel.tileSize / 2;;
         characterSpeed = 4; 
+        
+        builds.add(new PlayerBuild("ATK", 10, "/assets/effect/logo/sword.png", this));
+        builds.add(new PlayerBuild("HP", 15, "/assets/effect/logo/food.png", this));
+        builds.add(new PlayerBuild("DEF", 10, "/assets/effect/logo/shield.png", this));
     }
     public void getPlayerImage() {
         // defautl direction
@@ -111,7 +117,36 @@ public class Player extends Character{
         g2.drawImage(image, posX, posY, gamepanel.tileSize, gamepanel.tileSize, null);
     }
     
+    // GETTER SETTER
     public ArrayList<BufferedImage> getIdleAnimation(){
         return idle;
+    }
+    public BufferedImage getIdleImage(){
+        return idle.get(6);
+    }
+    public ArrayList<PlayerBuild> getBuilds(){
+        return builds;
+    }
+    
+    public int getShield(){
+        return shield;
+    }
+    public int getHp(){
+        return characterHp;
+    }
+    public int getAttack(){
+        return attackDamage;
+    }
+    public String getStatusByString(String value){
+        String result = value;
+        if(value.equals("ATK")){
+            result += " " + String.valueOf(attackDamage);
+        }else if(value.equals("DEF")){
+            result += " " + String.valueOf(shield);
+        }else{
+            result += " " + String.valueOf(characterHp);
+        }
+        
+        return result;
     }
 }

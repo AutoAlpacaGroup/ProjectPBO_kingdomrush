@@ -4,7 +4,9 @@
  */
 package PlayerBase;
 
+import ButtonManager.*;
 import MainPackage.GamePanel;
+import Object.PlayerBuild;
 import UI.InformationBoxUI;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -25,19 +27,43 @@ import javax.imageio.ImageIO;
  */
 public class Shop {
     GamePanel gamepanel;
+    PlayerBase playerbase;
+    
     protected int positionX, positionY;
     protected int bannerHeight, bannerWidth;
     protected final int borderSize = 8;
-    
+    protected Font customFont;
+    protected Color fontColor;
+    ArrayList<ItemsButtonManager> itemManager = new ArrayList<>();
+    ArrayList<BuildButtonManager> buildManager = new ArrayList<>();
     
     //ITEMS AND BUILD
     ArrayList<Item> items;
-    public Shop(GamePanel gamepanel){
+    ArrayList<PlayerBuild> builds;
+    
+    public Shop(GamePanel gamepanel, PlayerBase playerbase){
         this.gamepanel = gamepanel;
-        bannerHeight = gamepanel.screenHeight - gamepanel.tileSize * 4;
-        bannerWidth = bannerHeight;
+        this.playerbase = playerbase;
+        items = playerbase.getAllitems();
+        builds = playerbase.player.getBuilds();
+        
+        // SETUP BANNER HEIGHT, WIDTH & POSITION X Y
+        bannerHeight = gamepanel.screenHeight / 2;
+        bannerWidth = bannerHeight + gamepanel.tileSize / 2;
         positionX = gamepanel.screenWidth / 2 - bannerWidth / 2;
         positionY = gamepanel.screenHeight / 2 - bannerHeight / 2;
+        
+        // SETUP FONT
+        InputStream inputstream = getClass().getResourceAsStream("/assets/font/Merriweather-Regular.ttf");
+        
+        try { 
+            customFont = Font.createFont(Font.TRUETYPE_FONT, inputstream);
+            fontColor = new Color(0,0,0);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(InformationBoxUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InformationBoxUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void draw(Graphics2D g2){
@@ -49,21 +75,11 @@ public class Shop {
         g2.drawRect(positionX, positionY, bannerWidth, bannerHeight);
         // DRAW HEADER
         drawHeader(g2);
+        // DRAWCONTENT
+        drawContent(g2);
     }
     public void drawHeader(Graphics2D g2){
         BufferedImage image = null;
-        InputStream inputstream = getClass().getResourceAsStream("/assets/font/Merriweather-Regular.ttf");
-        Font customFont = null;
-        Color fontColor = null;
-        
-        try { 
-            customFont = Font.createFont(Font.TRUETYPE_FONT, inputstream);
-            fontColor = new Color(0,0,0);
-        } catch (FontFormatException ex) {
-            Logger.getLogger(InformationBoxUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(InformationBoxUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         try {
             image  = ImageIO.read(getClass().getResourceAsStream("/assets/banner/banner.png"));
@@ -71,6 +87,7 @@ public class Shop {
             Logger.getLogger(Shop.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        // SETUP WIDTH HEIGHT X Y 
         int width = bannerWidth - gamepanel.tileSize;
         int height = gamepanel.tileSize;
         int y = positionY - height / 2;
@@ -85,12 +102,78 @@ public class Shop {
         y = y + height / 2 - g2.getFontMetrics().getHeight() / 2 + g2.getFontMetrics().getAscent();
         x = x + width / 2 - (int)g2.getFontMetrics().getStringBounds(headerText, g2).getWidth() / 2;
         g2.drawString(headerText, x, y);
-        
-        // DRAWCONTENT
-        drawContent(g2);
     }
     public void drawContent(Graphics2D g2){
+        String buttonText;
+        int x,y,height,width, buttonHeight, buttonWidth, buttonX = 0, buttonY = 0;
+        int boxSize = 60;
+        int marginx = 42;
+        int marginy = 16;
+        int borderSize = 2;
         
+        // SETUP AND DRAW CHARACTER SKILL UPGRADE BOX
+        height = gamepanel.tileSize;
+        width = gamepanel.tileSize;
+        x = positionX + bannerWidth / 2 - width / 2 - width - marginx;
+        y = positionY + borderSize + gamepanel.tileSize / 4 * 3;
+        
+        buttonWidth = width + width / 4;
+        buttonHeight = 30;
+        g2.setFont(customFont);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16));
+        
+        for(int i = 0; i < items.size(); i++){
+            g2.setStroke(new BasicStroke(borderSize));
+            g2.drawImage(items.get(i).getLogo(), x, y, width, height, null);
+            g2.setColor(Color.white);
+            g2.drawRect(x, y, width, height);
+            
+            // DRAW UPGRADE TEXT BUTTON
+            buttonY = y + height + marginy / 2;
+            buttonX = (x + (width / 2)) - buttonWidth / 2;
+            
+            g2.setColor(new Color(51, 31, 16));
+            g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+            g2.setColor(new Color(154,62,51));
+            g2.setStroke(new BasicStroke(4));
+            g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
+            
+            itemManager.add(new ItemsButtonManager(buttonX, buttonY, buttonHeight, buttonWidth, items.get(i), playerbase));
+            buttonText = ("UP " + String.valueOf(items.get(i).getUpgradeCost()));
+            
+            g2.setColor(Color.white);
+            buttonY = buttonY + (buttonHeight / 2 - g2.getFontMetrics().getHeight() / 2) + g2.getFontMetrics().getAscent();
+            buttonX = buttonX + buttonWidth / 2 - (int)g2.getFontMetrics().getStringBounds(buttonText, g2).getWidth() / 2;
+            g2.drawString(buttonText, buttonX, buttonY);
+            
+            x += width + marginx;
+        }
+        
+        // BUILDS
+        x = positionX + bannerWidth / 2 - width / 2 - width - marginx;
+        y = buttonY + buttonHeight + marginy;
+        for(int i = 0; i < builds.size(); i++){
+            g2.setStroke(new BasicStroke(borderSize));
+            g2.drawImage(builds.get(i).getImage(), x, y, width, height, null);
+            g2.setColor(Color.white);
+            g2.drawRect(x, y, width, height);
+            
+            buttonY = y + height + marginy / 2;
+            buttonX = (x + (width / 2)) - buttonWidth / 2;
+            buttonText = ("UP " + String.valueOf(builds.get(i).getUpgradeCost()));
+            
+            g2.setColor(new Color(51, 31, 16));
+            g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+            g2.setColor(new Color(154,62,51));
+            g2.setStroke(new BasicStroke(4));
+            g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
+            buildManager.add(new BuildButtonManager(buttonX, buttonY, buttonHeight, buttonWidth, builds.get(i), playerbase));
+            g2.setColor(Color.white);
+            buttonY = buttonY + (buttonHeight / 2 - g2.getFontMetrics().getHeight() / 2) + g2.getFontMetrics().getAscent();
+            buttonX = buttonX + buttonWidth / 2 - (int)g2.getFontMetrics().getStringBounds(buttonText, g2).getWidth() / 2;
+            g2.drawString(buttonText, buttonX, buttonY);
+            x += width + marginx;
+        }
     }
     
     public boolean boxPressed(int x, int y){
@@ -100,5 +183,12 @@ public class Shop {
             }
         }
         return false;
+    }
+    
+    public void pressedButton(int x, int y){
+        for(int i = 0; i < 3; i++){
+            itemManager.get(i).isPressed(x, y);
+            buildManager.get(i).isPressed(x, y);
+        }
     }
 }

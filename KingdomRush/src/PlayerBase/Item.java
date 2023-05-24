@@ -21,21 +21,22 @@ public class Item {
     protected String itemName;
     protected int level;
     protected int cooldown;
+    protected int curCD;
     protected int damage;
-    protected boolean unlock;
     protected int upgradeCost;
     
     // BUTTON POSITION
     protected int x, y;
     protected int height, width;
     
-    public Item(String logoPath, String animationPath, String name, int damage, int cooldown, boolean unlock, int upgradeCost){
+    public Item(String logoPath, String animationPath, String name, int damage, int cooldown, int upgradeCost){
         this.itemName = name;
         this.damage = damage;
         this.level = 1;
         this.cooldown = cooldown;
-        this.unlock = unlock;
+        this.curCD = 0;
         this.upgradeCost = upgradeCost;
+        
         animation = new BufferedImage[10];
         
         try {
@@ -62,10 +63,29 @@ public class Item {
         this.height = height;
         this.width = width;
     }
+    public int getDamage(){
+        return level * damage;
+    }
+    public int getUpgradeCost(){
+        return level * upgradeCost;
+    }
     public int getLevel(){
         return level;
     }
-    public int getCooldown(){
-        return cooldown;
+    public String getCooldown(){
+        if(curCD == 0){
+            return "Ready";
+        }else{
+            return "CD " + cooldown;
+        }
+    } 
+    
+    public void levelUp(PlayerBase playerbase){
+        if(playerbase.getCoin() < getUpgradeCost()){
+            System.out.println("not enough coin");
+        }else{
+            playerbase.setCoin(playerbase.getCoin() - getUpgradeCost());
+            level += 1;
+        }
     }
 }

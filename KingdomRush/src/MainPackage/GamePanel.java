@@ -45,8 +45,8 @@ public class GamePanel extends JPanel implements Runnable{
     PauseUI pauseUI = new PauseUI(this);    
     TitleUI titleUI = new TitleUI(this);
     HomeMenuUI homemenuUI = new HomeMenuUI(this);
-    InformationBoxUI informationBoxUI = new InformationBoxUI(this);
-    Shop shop = new Shop(this);
+    InformationBoxUI informationBoxUI;
+    Shop shop;
     
     PlayerBase playerbase;
     
@@ -75,6 +75,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupDefault(){
         player = new Player(this, keyhandler);
         playerbase = new PlayerBase(this, player);
+        shop = new Shop(this, playerbase);
+        informationBoxUI = new InformationBoxUI(this, player);
         
         gameState = titleState;
     }
@@ -130,7 +132,7 @@ public class GamePanel extends JPanel implements Runnable{
             player.draw(g2);
             homemenuUI.draw(g2);
             playerbase.draw(g2);
-            informationBoxUI.draw(g2, playerbase.getStage(), playerbase.getAllitems(), player);
+            informationBoxUI.draw(g2, playerbase.getStage(), playerbase.getAllitems());
             if(shopStateOn == true){
                 shop.draw(g2);
             }
@@ -159,4 +161,5 @@ public class GamePanel extends JPanel implements Runnable{
     public boolean shopBoxPressed(int x, int y){
         return shop.boxPressed(x,y);
     }
+    
 }

@@ -28,14 +28,12 @@ public class Banner {
     protected BufferedImage image;
     protected Font customFont;
     protected Color fontColor;
-    protected String text;
     
-    public Banner(String imagePath, int width, int height, int x, int y, String text){
+    public Banner(String imagePath, int width, int height, int x, int y){
         bannerWidth = width;
         bannerHeight = height;
         this.positionX = x;
         this.positionY = y;
-        this.text = text;
         
         InputStream inputstream = getClass().getResourceAsStream("/assets/font/LuckiestGuy-Regular.ttf");
         try {
@@ -54,7 +52,7 @@ public class Banner {
         }   
     }
     
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2, String text){
         g2.drawImage(image, positionX, positionY, bannerWidth, bannerHeight, null);
         
         g2.setFont(customFont);
