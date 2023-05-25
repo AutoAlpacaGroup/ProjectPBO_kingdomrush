@@ -6,6 +6,10 @@ package MainPackage;
 import PlayerBase.PlayerBase;
 import Maps.MapsManager;
 import Object.Player;
+import Object.AssetSetter;
+import Object.SuperObject;
+import Object.Monster;
+import Object.Place;
 import PlayerBase.Shop;
 import UI.HomeMenuUI;
 import UI.InformationBoxUI;
@@ -15,6 +19,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -51,6 +56,13 @@ public class GamePanel extends JPanel implements Runnable{
     PlayerBase playerbase;
     
     Thread gameThread;
+    //AssetSetter untuk meletakkan object di map
+    //TOWER
+    public AssetSetter aSetter = new AssetSetter(this);
+    ArrayList<SuperObject> obj = new ArrayList<>();
+    
+    //MONSTER
+    ArrayList<SuperObject> Monster = new ArrayList<>();
     
     // GAME MECHANICS
     public int gameState;
@@ -85,6 +97,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void startGameThread(){
         gameThread = new Thread(this);
         gameThread.start();
+        aSetter.setEnemy();
     }
     
     @Override
@@ -131,6 +144,30 @@ public class GamePanel extends JPanel implements Runnable{
             mapsmanager.draw(g2);
             player.draw(g2);
             homemenuUI.draw(g2);
+            for(int i=0;i<obj.size();i++){
+                if(obj.get(i) !=null){
+                    obj.get(i).draw(g2, this);
+                }
+            }
+            for(int i=0;i<Monster.size();i++){
+                if(Monster.get(i) != null){
+                    Monster.get(i).draw(g2, this);
+                    
+                    if(Monster.get(i).getWorldX()!=this.tileSize*11){
+                        Monster.get(i).setWorldX(Monster.get(i).getWorldX()-10);
+                    }else if(Monster.get(i).getWorldX() == this.tileSize*11){
+                        Monster.get(i).setWorldY(Monster.get(i).getWorldY()-10);
+                    }
+                    if(Monster.get(i).getWorldX()==this.tileSize*4 && Monster.get(i).getWorldY()<=this.tileSize*2 ){
+                        while(Monster.get(i).getWorldY()+1<160){
+                            Monster.get(i).setWorldY(Monster.get(i).getWorldY()+10);
+                        }
+                    }else if(Monster.get(i).getWorldX()>=this.tileSize*4 && Monster.get(i).getWorldY()==this.tileSize*2 ){
+                        Monster.get(i).setWorldX(Monster.get(i).getWorldX()-10);
+                    }
+                    
+                }
+            }
             playerbase.draw(g2);
             informationBoxUI.draw(g2, playerbase.getStage(), playerbase.getAllitems());
             if(shopStateOn == true){
@@ -161,5 +198,41 @@ public class GamePanel extends JPanel implements Runnable{
     public boolean shopBoxPressed(int x, int y){
         return shop.boxPressed(x,y);
     }
-    
+    public void setTower(){
+        obj.add(new Place(1));
+    }
+    public void setMonster(){
+        for(int i=0;i<20;i++){
+            Monster.add(new Monster(1));
+        }
+    }
+    public int getPosxPlayer(){
+        return player.getPosX();
+    }
+    public int getPosyPlayer(){
+        return player.getPosY();
+    }
+    public void setWorldxTower(int a){
+        obj.get(obj.size()-1).setWorldX(a);
+    }
+    public void setWorldyTower(int a){
+        obj.get(obj.size()-1).setWorldY(a);
+    }
+    public void setWorldxMonster(int a){
+        Monster.get(Monster.size()-1).setWorldX(a);
+    }
+    public void setWorldyMonster(int a){
+        Monster.get(Monster.size()-1).setWorldY(a);
+    }
+
+    public ArrayList<SuperObject> getObj() {
+        return obj;
+    }
+
+    public void setObj(ArrayList<SuperObject> obj) {
+        this.obj = obj;
+    }
+    public int jumlahTower(){
+        return obj.size();
+    }
 }

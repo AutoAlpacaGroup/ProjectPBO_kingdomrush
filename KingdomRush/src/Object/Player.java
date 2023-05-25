@@ -149,4 +149,10 @@ public class Player extends Character{
         
         return result;
     }
+    public int getPosX(){
+        return this.posX;
+    }
+    public int getPosY(){
+        return this.posY;
+    }
 }

@@ -60,6 +60,8 @@ public class KeyHandler implements KeyListener{
                 }else if(gamepanel.gameState == gamepanel.pauseState){
                     gamepanel.gameState = gamepanel.playState;
                 }
+            }else if(code == KeyEvent.VK_B){
+                gamepanel.aSetter.setObject(1);
             }
         }
     }
